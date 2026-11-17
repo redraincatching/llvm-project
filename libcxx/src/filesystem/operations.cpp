@@ -169,7 +169,7 @@ void __copy(const path& from, const path& to, copy_options options, error_code* 
     return;
   } else if (is_directory(f) && bool(copy_options::create_symlinks & options)) {
     return err.report(errc::is_a_directory);
-  } else if (is_directory(f) && (bool(copy_options::recursive & options) || copy_options::none == options)) {
+  } else if (is_directory(f) && (bool(copy_options::recursive & options) || !bool(copy_options::__in_recursive_copy & options)) {
     if (!exists(t)) {
       // create directory to with attributes from 'from'.
       __create_directory(to, from, ec);
